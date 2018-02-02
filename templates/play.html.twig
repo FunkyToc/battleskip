@@ -11,11 +11,12 @@
 
         <hr>
 
-
-
-
-
         
+        {{ form_start(battleform) }}
+        {{ form_widget(battleform) }}
+        {{ form_end(battleform) }}
+
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

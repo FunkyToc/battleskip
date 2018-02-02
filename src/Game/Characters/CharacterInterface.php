@@ -6,7 +6,7 @@ namespace App\Game\Characters;
 interface CharacterInterface 
 {
 	
-	public function attack($target);
-	public function defend($target);
-	public function counter($target);
+	public function attack();
+	public function defend();
+	public function counter();
 }

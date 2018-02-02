@@ -8,4 +8,5 @@ interface ClassesInterface
 {
 	
 	public function create();
+	public function createMany(int $number);
 }

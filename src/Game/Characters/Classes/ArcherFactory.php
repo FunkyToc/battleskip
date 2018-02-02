@@ -14,4 +14,14 @@ class ArcherFactory implements ClassesInterface
 		return new Archer();
 	}
 
+	public function createMany(int $number)  
+	{
+		for ($i=0; $i < $number; $i++) 
+		{ 
+			$army[] = new Archer();
+		}
+
+		return $army;
+	}
+
 }

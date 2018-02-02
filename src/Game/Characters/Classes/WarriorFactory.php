@@ -14,4 +14,15 @@ class WarriorFactory implements ClassesInterface
 		return new Warrior();
 	}
 
+	public function createMany(int $number)  
+	{
+		for ($i=0; $i < $number; $i++) 
+		{ 
+			$army[] = new Warrior();
+		}
+
+		return $army;
+	}
+
+
 }

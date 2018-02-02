@@ -14,4 +14,15 @@ class MageFactory implements ClassesInterface
 		return new Mage();
 	}
 
+	public function createMany(int $number)  
+	{
+		for ($i=0; $i < $number; $i++) 
+		{ 
+			$army[] = new Mage();
+		}
+
+		return $army;
+	}
+
+
 }

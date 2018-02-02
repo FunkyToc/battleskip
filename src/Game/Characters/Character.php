@@ -17,7 +17,6 @@ abstract class Character implements CharacterInterface
 	protected $bonus_counter;
 
 
-
 	// ACTIONS 
 	public function __construct() 
 	{
@@ -30,17 +29,21 @@ abstract class Character implements CharacterInterface
 		$this->setBonus_counter(0);
 	}
 
-	public function attack($target)
+	public function attack()
 	{
+		$attackForce = $this->attack + $this->bonus_attack;
 
+		return $attackForce;
 	}
 
-	public function defend($target)
+	public function defend()
 	{
-		
+		$defenseForce = $this->defense + $this->bonus_defense;
+
+		return $defenseForce;
 	}
 
-	public function counter($target)
+	public function counter()
 	{
 		
 	}
