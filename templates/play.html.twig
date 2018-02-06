@@ -12,9 +12,68 @@
         <hr>
 
         
-        {{ form_start(battleform) }}
-        {{ form_widget(battleform) }}
-        {{ form_end(battleform) }}
+        {{ form_start(battleForm) }}
+        {{ form_widget(battleForm) }}
+        {{ form_end(battleForm) }}
+
+        <br>
+
+        {% if battleForm.vars.submitted and battleForm.vars.valid %}
+            <div style="display: flex; background-color: lightgrey;">
+                {% block army1 %}
+                    <div style="width: 48%; float: left;">
+                        <h2>Army 1</h2>
+                        <div>
+                            <h4>Units {{ count(army1.unitsList) }}</h4>
+                            <ul>
+                                <li>Warriors : {{ army1.getWarriors()|length }}</li>
+                                <li>Archers : {{ army1.getArchers()|length }}</li>
+                                <li>Mages : {{ army1.getMages()|length }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% block army2 %}
+                    <div style="width: 48%; float: left;">
+                        <h2>Army 2</h2>
+                        <div>
+                            <h4>Units {{ count(army2.unitsList) }}</h4>
+                            <ul>
+                                <li>Warriors : {{ army2.getWarriors()|length }}</li>
+                                <li>Archers : {{ army2.getArchers()|length }}</li>
+                                <li>Mages : {{ army2.getMages()|length }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+            
+
+            {% block results %}
+                <div style="width: 48%; float: left;">
+                    <h2>Results</h2>
+                    <h4>Winner</h4>
+                    
+                    <div>
+                        <h5>Battle infos</h5>
+                        <div>
+                            <h5>Tour 1</h5>
+                            <ul>
+                                <li>Archers attaquent Army2 et inflige 26 dégats.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            {% endblock %}
+
+
+        {% endif %}
+
+        
+
+
 
 
         {% block javascripts %}{% endblock %}

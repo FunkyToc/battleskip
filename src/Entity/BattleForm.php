@@ -13,6 +13,7 @@ class BattleForm
 	public $p2_mage;
 
 
+
 	// P1 
 	public function getP1_warrior()
 	{

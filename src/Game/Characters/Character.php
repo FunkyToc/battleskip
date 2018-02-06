@@ -29,23 +29,18 @@ abstract class Character implements CharacterInterface
 		$this->setBonus_counter(0);
 	}
 
-	public function attack()
+	public function getAttack()
 	{
 		$attackForce = $this->attack + $this->bonus_attack;
 
 		return $attackForce;
 	}
 
-	public function defend()
+	public function getDefense()
 	{
 		$defenseForce = $this->defense + $this->bonus_defense;
 
 		return $defenseForce;
-	}
-
-	public function counter()
-	{
-		
 	}
 
 	public function death()
