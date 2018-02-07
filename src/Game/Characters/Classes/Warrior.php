@@ -11,7 +11,7 @@ class Warrior extends Character implements SpecialInterface
 
 	// CONST 
 	const CLASSE = 'Warrior';
-	const HP_MAX = 100;
+	const HP_MAX = 50;
 	const MP_MAX = 10;
 	const SPE_DMG = 10;
 	const SPE_COST = 10;
@@ -27,16 +27,15 @@ class Warrior extends Character implements SpecialInterface
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setAttack(7);
+		$this->setAttack(8);
 		$this->setDefense(10);
-		$this->setDodge(10);
+		$this->setDodge(5);
 		$this->setSpeed(70);
 	}
 
-	public function special($target)
+	public function special()
 	{
-		$this->removeMp(static::spe_cost);
-		$this->taunt($target);
+		$this->shield();
 	}
 
 	public function passive()
@@ -44,14 +43,15 @@ class Warrior extends Character implements SpecialInterface
 		$this->regenHp();
 	}
 
-	public function taunt()
+	public function shield()
 	{
-
+		$this->removeMp(static::SPE_COST);
+		$this->setBonus_defense($this->defense);
 	}
 
 	public function regenHp()
 	{
-		$this->addHp(5);
+		$this->addHp(1);
 	}
 
 

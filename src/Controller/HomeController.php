@@ -67,20 +67,16 @@ class HomeController extends Controller
             $combatManager = new CombatManager($army1, $army2);
             $combatManager->fight();
             
-            //$combatManager->getWinner();
-            //$combatManager->getResult();
-
-
-
 
 
             //dump($army1);
             //dump($army2);
-            dump($combatManager->getArmy1()->getUnitsList());
-            die;
+            //dump($combatManager->getArmy2()->getUnitsList());
+            //dump($combatManager->getArmy2()->getLivingUnits('warrior'));
+            //die;
 
 
-            return $this->render('play.html.twig', ['battleForm' => $battleForm->createView(), 'army1' => $army1, 'army2' => $army2]);
+            return $this->render('play.html.twig', ['battleForm' => $battleForm->createView(), 'combat' => $combatManager]);
         }
  
         return $this->render('play.html.twig', ['battleForm' => $battleForm->createView()]);

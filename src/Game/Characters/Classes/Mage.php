@@ -11,10 +11,10 @@ class Mage extends Character implements SpecialInterface
 
 	// CONST 
 	const CLASSE = 'Mage';
-	const HP_MAX = 60;
+	const HP_MAX = 50;
 	const MP_MAX = 30;
-	const SPE_DMG = 30;
-	const SPE_COST = 10;
+	const SPE_DMG = 20;
+	const SPE_COST = 12;
 
 	// ATTR 
 	protected $attack;
@@ -27,16 +27,15 @@ class Mage extends Character implements SpecialInterface
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setAttack(5);
+		$this->setAttack(9);
 		$this->setDefense(5);
 		$this->setDodge(5);
 		$this->setSpeed(50);
 	}
 
-	public function special($target)
+	public function special()
 	{
-		$this->removeMp(static::SPE_COST);
-		$this->fireball($target);
+		$this->fireball();
 	}
 
 	public function passive()
@@ -46,7 +45,8 @@ class Mage extends Character implements SpecialInterface
 
 	public function fireball()
 	{
-
+		$this->removeMp(static::SPE_COST);
+		$this->setBonus_attack(static::SPE_DMG);
 	}
 
 	public function regenMp()

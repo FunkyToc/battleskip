@@ -12,8 +12,10 @@ abstract class Character implements CharacterInterface
 	protected $lvl;
 	protected $hp;
 	protected $mp;
+	protected $statut;
 	protected $bonus_attack;
 	protected $bonus_defense;
+	protected $bonus_dodge;
 	protected $bonus_counter;
 
 
@@ -26,12 +28,18 @@ abstract class Character implements CharacterInterface
 		$this->setMp(static::MP_MAX);
 		$this->setBonus_attack(0);
 		$this->setBonus_defense(0);
+		$this->setBonus_dodge(0);
 		$this->setBonus_counter(0);
 	}
 
 	public function getAttack()
 	{
 		$attackForce = $this->attack + $this->bonus_attack;
+		
+		if ($attackForce < 1) 
+		{
+			$attackForce = 1;
+		}
 
 		return $attackForce;
 	}
@@ -101,6 +109,11 @@ abstract class Character implements CharacterInterface
 		return static::CLASSE;
 	}
 
+	public function getDead() 
+	{
+		return $this->dead;
+	}
+
 	public function getLvl() 
 	{
 		return $this->lvl;
@@ -116,6 +129,11 @@ abstract class Character implements CharacterInterface
 		return $this->mp;
 	}
 
+	public function getStatut()
+	{
+		return $this->statut;
+	}
+
 	public function getBonus_attack()
 	{
 		return $this->bonus_attack;
@@ -124,6 +142,11 @@ abstract class Character implements CharacterInterface
 	public function getBonus_defense()
 	{
 		return $this->bonus_defense;
+	}
+
+	public function getBonus_dodge()
+	{
+		return $this->bonus_dodge;
 	}
 
 	public function getBonus_counter()
@@ -158,6 +181,11 @@ abstract class Character implements CharacterInterface
 		$this->mp = $mp;
 	}
 
+	public function setStatut(int $statut)
+	{
+		$this->statut = $statut;
+	}
+
 	public function setBonus_attack(float $bonus_attack) 
 	{
 		$this->bonus_attack = $bonus_attack;
@@ -166,6 +194,11 @@ abstract class Character implements CharacterInterface
 	public function setBonus_defense(float $bonus_defense) 
 	{
 		$this->bonus_defense = $bonus_defense;
+	}
+
+	public function setBonus_dodge(float $bonus_dodge) 
+	{
+		$this->bonus_dodge = $bonus_dodge;
 	}
 
 	public function setBonus_counter(float $bonus_counter) 

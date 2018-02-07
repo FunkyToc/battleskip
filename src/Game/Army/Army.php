@@ -14,12 +14,14 @@ class Army extends \ArrayIterator
 	protected $name;
 	protected $unitsList;
 	protected $classList = [];
+	protected $allowedClass;
 
 	public function __construct(array $units)
 	{
 		$this->addUnitsList($units);
 		$this->setCountClasses();
 		$this->setClassList();
+		$this->allowedClass = ['warrior', 'archer', 'mage'];
 	}
 
 	public function addUnit(Character $unit)
@@ -34,7 +36,7 @@ class Army extends \ArrayIterator
 			$this->addUnit($unit);
 		}
 	}
-
+ 
 
 	/* 
 	 * SETTERS  
@@ -150,16 +152,14 @@ class Army extends \ArrayIterator
 		return $array;
 	}
 
-
 	public function getAttack(string $class = '')
 	{
 		$globalAttack = 0;
-		$allowedClass = ['warrior', 'archer', 'mage'];
 
 		// Class attack 
 		if (!empty($class)) 
 		{
-			if (array_search($class, $allowedClass) !== false) 
+			if (array_search($class, $this->allowedClass) !== false) 
 			{
 				$theclass = 'App\Game\Characters\Classes\\'. ucfirst($class);
 				
@@ -186,9 +186,67 @@ class Army extends \ArrayIterator
 			}
 		}
 
-
 		return $globalAttack;
 	}
+
+	public function resetBonus()
+	{
+		foreach ($this->unitsList as $unit) 
+		{
+			$unit->setBonus_attack(0);
+			$unit->setBonus_defense(0);
+			$unit->setBonus_counter(0);
+			$unit->setStatut(0);
+		}
+	}
+
+	public function getLivingUnits(string $class = '')
+	{
+		$array = [];
+
+		// Class alive 
+		if (!empty($class)) 
+		{
+			if (array_search($class, $this->allowedClass) !== false) 
+			{
+				$theclass = 'App\Game\Characters\Classes\\'. ucfirst($class);
+				
+				foreach ($this->unitsList as $unit) 
+				{
+					if ($unit->getDead() == false && $unit instanceof $theclass) 
+					{
+						$array[] = $unit;
+					}
+				}
+			}
+			else 
+			{
+				return 'Error';
+			}
+
+		}
+		else 
+		{
+			foreach ($this->unitsList as $unit) 
+			{
+				if ($unit->getDead() == false) 
+				{
+					$array[] = $unit;
+				}
+			}
+		}
+
+		return $array;
+	}
+
+	public function activePassives()
+	{
+		foreach ($this->getLivingUnits() as $unit) 
+		{
+			$unit->passive();
+		}
+	}
+
 
 
 }

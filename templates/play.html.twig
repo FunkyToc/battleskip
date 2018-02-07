@@ -19,50 +19,95 @@
         <br>
 
         {% if battleForm.vars.submitted and battleForm.vars.valid %}
-            <div style="display: flex; background-color: lightgrey;">
+            
+            <!-- <div style="display: flex; background-color: lightgrey;">
                 {% block army1 %}
                     <div style="width: 48%; float: left;">
                         <h2>Army 1</h2>
                         <div>
-                            <h4>Units {{ count(army1.unitsList) }}</h4>
+                            <h4>Units {{ combat.army1.unitsList|length }}</h4>
                             <ul>
-                                <li>Warriors : {{ army1.getWarriors()|length }}</li>
-                                <li>Archers : {{ army1.getArchers()|length }}</li>
-                                <li>Mages : {{ army1.getMages()|length }}</li>
+                                <li>Warriors : {{ combat.army1.getWarriors()|length }}</li>
+                                <li>Archers : {{ combat.army1.getArchers()|length }}</li>
+                                <li>Mages : {{ combat.army1.getMages()|length }}</li>
                             </ul>
                         </div>
                     </div>
                 {% endblock %}
-
+            
                 {% block army2 %}
                     <div style="width: 48%; float: left;">
                         <h2>Army 2</h2>
                         <div>
-                            <h4>Units {{ count(army2.unitsList) }}</h4>
+                            <h4>Units {{ combat.army2.unitsList|length }}</h4>
                             <ul>
-                                <li>Warriors : {{ army2.getWarriors()|length }}</li>
-                                <li>Archers : {{ army2.getArchers()|length }}</li>
-                                <li>Mages : {{ army2.getMages()|length }}</li>
+                                <li>Warriors : {{ combat.army2.getWarriors()|length }}</li>
+                                <li>Archers : {{ combat.army2.getArchers()|length }}</li>
+                                <li>Mages : {{ combat.army2.getMages()|length }}</li>
                             </ul>
                         </div>
                     </div>
                 {% endblock %}
-            </div>
+            </div> -->
             
 
             {% block results %}
                 <div style="width: 48%; float: left;">
                     <h2>Results</h2>
-                    <h4>Winner</h4>
+                    <h4>Winner : {{ combat.getWinner }}, en {{ combat.currentTurn }} tours !</h4>
                     
                     <div>
                         <h5>Battle infos</h5>
-                        <div>
-                            <h5>Tour 1</h5>
-                            <ul>
-                                <li>Archers attaquent Army2 et inflige 26 dégats.</li>
-                            </ul>
-                        </div>
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Tour</th>
+                                    <th style="width: 25px; background-color: grey;"> Army 1 </th>
+                                    <th>Warrior</th>
+                                    <th>Archer</th>
+                                    <th>Mage</th>
+                                    <th>Total</th>
+                                    <th style="width: 25px; background-color: grey;"> Army 2 </th>
+                                    <th>Warrior</th>
+                                    <th>Archer</th>
+                                    <th>Mage</th>
+                                    <th>Total</th> 
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Départ</td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td>{{ combat.army1.getWarriors()|length }}</td>
+                                    <td>{{ combat.army1.getArchers()|length }}</td>
+                                    <td>{{ combat.army1.getMages()|length }}</td>
+                                    <td>{{ combat.army1.getUnitsList()|length }}</td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td>{{ combat.army2.getWarriors()|length }}</td>
+                                    <td>{{ combat.army2.getArchers()|length }}</td>
+                                    <td>{{ combat.army2.getMages()|length }}</td>
+                                    <td>{{ combat.army2.getUnitsList()|length }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Fin</td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td>{{ combat.army1.getLivingUnits('warrior')|length }}</td>
+                                    <td>{{ combat.army1.getLivingUnits('archer')|length }}</td>
+                                    <td>{{ combat.army1.getLivingUnits('mage')|length }}</td>
+                                    <td>{{ combat.army1.getLivingUnits()|length }}</td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td>{{ combat.army2.getLivingUnits('warrior')|length }}</td>
+                                    <td>{{ combat.army2.getLivingUnits('archer')|length }}</td>
+                                    <td>{{ combat.army2.getLivingUnits('mage')|length }}</td>
+                                    <td>{{ combat.army2.getLivingUnits()|length }}</td>                                       
+                                </tr>
+                                
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>

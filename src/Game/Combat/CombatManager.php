@@ -12,6 +12,7 @@ class CombatManager
 	protected $army2;
 	protected $currentTurn;
 	protected $maxTurn;
+	protected $winner;
 
 
 	public function __construct(Army $army1, Army $army2)
@@ -19,7 +20,7 @@ class CombatManager
 		$this->army1 = $army1;
 		$this->army2 = $army2;
 		$this->currentTurn = 1;
-		$this->maxTurn = 5;
+		$this->maxTurn = 100;
 	}
 
 
@@ -27,8 +28,8 @@ class CombatManager
 	public function fight()
 	{
 		// X tours
-		for ($i=0; $i < $this->maxTurn; $i++) 
-		{ 
+		for ($i=1; $i < $this->maxTurn; $i++) 
+		{
 			// initiative 
 			if ($this->army1->getAttack() > $this->army2->getAttack()) 
 			{
@@ -46,33 +47,111 @@ class CombatManager
 
 			// Contre attack 
 			$this->attack($defenser, $attacker);
-
-			// Check équipe dead 
 			
-			
+			// Reset Bonus 
+			$attacker->resetBonus();
+			$defenser->resetBonus();
 
+			// Passives 
+			$attacker->activePassives();
+			$defenser->activePassives();
+
+			// Check team dead 
+			if ((count($attacker->getLivingUnits()) == 0) || (count($defenser->getLivingUnits()) == 0)) 
+			{
+				break;
+			}
+			
+			// Turn stuff 
+			$this->naturalRegen();
 			$this->currentTurn++;
 		}
 
 		// Winner 
+		$this->winner = $this->defineWinner();
 	}
 
 	public function attack(Army $attacker, Army $defenser)
 	{
-		foreach ($attacker->getUnitsList() as $unit) 
+		foreach ($attacker->getLivingUnits() as $unit) 
 		{
-			$defenserUnit = $defenser->getUnitsList()[rand(0, count($defenser->getUnitsList())-1)];
-			$defenserUnit->setHp($defenserUnit->getHp() - $unit->getAttack());
-			
-			if ($defenserUnit->getHp() <= 0) 
+			// Choose Defender 
+			$defenserUnits = $defenser->getLivingUnits();
+
+			if (count($defenserUnits) == 0) 
 			{
-				$defenserUnit->death();
+				break;
 			}
+
+			// Defenser Unit 
+			$defenserUnit = $defenserUnits[rand(0, (count($defenserUnits)-1))];
+
+			// Special 
+			if ($unit->getMp() > $unit::SPE_COST) 
+			{
+				$unit->special();
+			}
+
+			// Attack / Dodge 
+			$damage = $unit->getAttack() - ($defenserUnit->getDefense() / 5);
+
+			if ($defenserUnit->getDodge() > rand(1, 100)) 
+			{
+				// Dodge 
+
+			}
+			else 
+			{
+				// Attack 
+				$defenserUnit->removeHp($damage);
+			}
+		}
+	}
+
+	public function naturalRegen()
+	{
+		foreach ($this->army1->getLivingUnits() as $unit) 
+		{
+			$unit->addMp(1);
+		}
+
+		foreach ($this->army2->getLivingUnits() as $unit) 
+		{
+			$unit->addMp(1);
+		}
+	}
+
+	public function defineWinner()
+	{
+		$army1UnitsCount = count($this->army1->getLivingUnits());
+		$army2UnitsCount = count($this->army2->getLivingUnits());
+
+		if ($army1UnitsCount == $army2UnitsCount)  
+		{
+			return 'Egalité';
+		}
+		else if ($army1UnitsCount > $army2UnitsCount)
+		{
+			return 'Army 1';
+		}
+		else 
+		{
+			return 'Army 2';
 		}
 	}
 
 
 	// GETTERS 
+	public function getArmy1()
+	{
+		return $this->army1;
+	}
+
+	public function getArmy2()
+	{
+		return $this->army2;
+	}
+
 	public function getCurrentTurn()
 	{
 		return $this->currentTurn;
@@ -83,14 +162,9 @@ class CombatManager
 		return $this->maxTurn;
 	}
 
-	public function getArmy1()
+	public function getWinner()
 	{
-		return $this->army1;
-	}
-
-	public function getArmy2()
-	{
-		return $this->army2;
+		return $this->winner;
 	}
 
 
@@ -113,6 +187,11 @@ class CombatManager
 	public function setArmy2(Army $army2)
 	{
 		$this->army2 = $army2;
+	}
+
+	public function setWinner(string $winner)
+	{
+		$this->winner = $winner;
 	}
 
 }
