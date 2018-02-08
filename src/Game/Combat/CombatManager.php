@@ -143,21 +143,100 @@ class CombatManager
 
 	public function defineWinner()
 	{
+		// Score Army 1 
 		$army1UnitsCount = count($this->army1->getLivingUnits());
-		$army2UnitsCount = count($this->army2->getLivingUnits());
+		$army1UnitsHp = 0;
+		$army1UnitsAtk = 0;
 
+		foreach ($this->army1->getLivingUnits() as $unit) 
+		{
+			$army1UnitsHp += $unit->getHp();
+			$army1UnitsAtk += $unit->getAttack();
+		}
+
+		$army1UnitsHp = $army1UnitsHp / $army1UnitsCount;
+		$army1UnitsAtk = $army1UnitsAtk / $army1UnitsCount;
+
+		// Score Army 2 
+		$army2UnitsCount = count($this->army2->getLivingUnits());
+		$army2UnitsHp = 0;
+		$army2UnitsAtk = 0;
+		
+		foreach ($this->army2->getLivingUnits() as $unit) 
+		{
+			$army2UnitsHp += $unit->getHp();
+			$army2UnitsAtk += $unit->getAttack();
+		}
+
+		$army2UnitsHp = $army2UnitsHp / $army2UnitsCount;
+		$army2UnitsAtk = $army2UnitsAtk / $army2UnitsCount;
+
+
+		// Points 
+		$army1Points = 0;
+		$army2Points = 0;
+
+		// Units number  
 		if ($army1UnitsCount == $army2UnitsCount)  
 		{
-			return 'Egalité';
+			$army1Points++;
+			$army2Points++;
 		}
 		else if ($army1UnitsCount > $army2UnitsCount)
 		{
+			$army1Points;
+		}
+		else if ($army1UnitsCount < $army2UnitsCount)
+		{
+			$army2Points++;
+		}
+
+		// Total HP 
+		if ($army1UnitsHp == $army2UnitsHp)  
+		{
+			$army1Points++;
+			$army2Points++;
+		}
+		else if ($army1UnitsHp > $army2UnitsHp)
+		{
+			$army1Points;
+		}
+		else if ($army1UnitsHp < $army2UnitsHp)
+		{
+			$army2Points++;
+		}
+
+		// Total Atk 
+		if ($army1UnitsAtk == $army2UnitsAtk)  
+		{
+			$army1Points++;
+			$army2Points++;
+		}
+		else if ($army1UnitsAtk > $army2UnitsAtk)
+		{
+			$army1Points;
+		}
+		else if ($army1UnitsAtk < $army2UnitsAtk)
+		{
+			$army2Points++;
+		}
+
+
+		// Decide 
+		if ($army1Points == $army2Points) 
+		{
+			return 'Égalité';
+		}
+		else if ($army1Points > $army2Points)
+		{
 			return 'Army 1';
 		}
-		else 
+		else if ($army1Points < $army2Points)
 		{
 			return 'Army 2';
 		}
+
+		return 'Error';
 	}
 
 

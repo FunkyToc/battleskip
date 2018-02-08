@@ -18,38 +18,7 @@
 
         <br>
 
-        {% if battleForm.vars.submitted and battleForm.vars.valid %}
-            
-            <!-- <div style="display: flex; background-color: lightgrey;">
-                {% block army1 %}
-                    <div style="width: 48%; float: left;">
-                        <h2>Army 1</h2>
-                        <div>
-                            <h4>Units {{ combat.army1.unitsList|length }}</h4>
-                            <ul>
-                                <li>Warriors : {{ combat.army1.getWarriors()|length }}</li>
-                                <li>Archers : {{ combat.army1.getArchers()|length }}</li>
-                                <li>Mages : {{ combat.army1.getMages()|length }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endblock %}
-            
-                {% block army2 %}
-                    <div style="width: 48%; float: left;">
-                        <h2>Army 2</h2>
-                        <div>
-                            <h4>Units {{ combat.army2.unitsList|length }}</h4>
-                            <ul>
-                                <li>Warriors : {{ combat.army2.getWarriors()|length }}</li>
-                                <li>Archers : {{ combat.army2.getArchers()|length }}</li>
-                                <li>Mages : {{ combat.army2.getMages()|length }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endblock %}
-            </div> -->
-            
+        {% if battleForm.vars.submitted and battleForm.vars.valid %}            
 
             {% block results %}
                 <div style="width: 48%; float: left;">
@@ -93,7 +62,7 @@
                                 </tr>
                                 
                                 {% for turn, stats in combat.unitsTurn %}
-                                    <tr>
+                                    <tr style="color: grey;">
                                         <td>{{ turn }}</td>
                                         <td style="width: 25px; background-color: grey;"> </td>
                                         <td>{{ stats.army1.getLivingUnits('warrior')|length }}</td>
@@ -111,17 +80,31 @@
                                 <tr>
                                     <td>Unité perdues</td>
                                     <td style="width: 25px; background-color: grey;"> </td>
-                                    <td>{{ combat.army1.getWarriors()|length - combat.army1.getLivingUnits('warrior')|length }}</td>
-                                    <td>{{ combat.army1.getArchers()|length - combat.army1.getLivingUnits('archer')|length }}</td>
-                                    <td>{{ combat.army1.getMages()|length - combat.army1.getLivingUnits('mage')|length }}</td>
-                                    <td>{{ combat.army1.getUnitsList()|length - combat.army1.getLivingUnits()|length }}</td>
+                                    <td><i>{{ combat.army1.getWarriors()|length - combat.army1.getLivingUnits('warrior')|length }}</i></td>
+                                    <td><i>{{ combat.army1.getArchers()|length - combat.army1.getLivingUnits('archer')|length }}</i></td>
+                                    <td><i>{{ combat.army1.getMages()|length - combat.army1.getLivingUnits('mage')|length }}</i></td>
+                                    <td><i>{{ combat.army1.getUnitsList()|length - combat.army1.getLivingUnits()|length }}</i></td>
                                     <td style="width: 25px; background-color: grey;"> </td>
-                                    <td>{{ combat.army2.getWarriors()|length - combat.army2.getLivingUnits('warrior')|length }}</td>
-                                    <td>{{ combat.army2.getArchers()|length - combat.army2.getLivingUnits('archer')|length }}</td>
-                                    <td>{{ combat.army2.getMages()|length - combat.army2.getLivingUnits('mage')|length }}</td>
-                                    <td>{{ combat.army2.getUnitsList()|length - combat.army2.getLivingUnits()|length }}</td>                                       
+                                    <td><i>{{ combat.army2.getWarriors()|length - combat.army2.getLivingUnits('warrior')|length }}</i></td>
+                                    <td><i>{{ combat.army2.getArchers()|length - combat.army2.getLivingUnits('archer')|length }}</i></td>
+                                    <td><i>{{ combat.army2.getMages()|length - combat.army2.getLivingUnits('mage')|length }}</i></td>
+                                    <td><i>{{ combat.army2.getUnitsList()|length - combat.army2.getLivingUnits()|length }}</i></td>
                                 </tr>
-                                
+
+                                <tr>
+                                    <td><b>Résultats</b></td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td><b>{{ combat.army1.getLivingUnits('warrior')|length }}</b></td>
+                                    <td><b>{{ combat.army1.getLivingUnits('archer')|length }}</b></td>
+                                    <td><b>{{ combat.army1.getLivingUnits('mage')|length }}</b></td>
+                                    <td><b>{{ combat.army1.getLivingUnits()|length }}</b></td>
+                                    <td style="width: 25px; background-color: grey;"> </td>
+                                    <td><b>{{ combat.army2.getLivingUnits('warrior')|length }}</b></td>
+                                    <td><b>{{ combat.army2.getLivingUnits('archer')|length }}</b></td>
+                                    <td><b>{{ combat.army2.getLivingUnits('mage')|length }}</b></td>
+                                    <td><b>{{ combat.army2.getLivingUnits()|length }}</b></td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -129,12 +112,7 @@
                 </div>
             {% endblock %}
 
-
         {% endif %}
-
-        
-
-
 
 
         {% block javascripts %}{% endblock %}

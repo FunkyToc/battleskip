@@ -47,9 +47,7 @@ class HomeController extends Controller
             ->getForm();
         $battleForm->handleRequest($request);
 
-
-
-
+        // Start Game 
         if ($battleForm->isSubmitted() && $battleForm->isValid()) 
         {
             // Characters Factories 
@@ -62,12 +60,10 @@ class HomeController extends Controller
             $army1 = new Army(array_merge($warriorFactory->createMany($battleForm->getData()->p1_warrior), $archerFactory->createMany($battleForm->getData()->p1_archer), $mageFactory->createMany($battleForm->getData()->p1_mage)));
             $army2 = new Army(array_merge($warriorFactory->createMany($battleForm->getData()->p2_warrior), $archerFactory->createMany($battleForm->getData()->p2_archer), $mageFactory->createMany($battleForm->getData()->p2_mage)));
 
-
             // Combat 
             $combatManager = new CombatManager($army1, $army2);
             $combatManager->fight();
-            
-
+    
 
             //dump($army1);
             //dump($army2);
