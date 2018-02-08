@@ -72,9 +72,9 @@ class HomeController extends Controller
             //dump($army1);
             //dump($army2);
             //dump($combatManager->getArmy2()->getUnitsList());
-            //dump($combatManager->getArmy2()->getLivingUnits('warrior'));
+            //dump($combatManager->getUnitsTurn()[1]['army1']->getUnitsList());
+            //dump($combatManager->getUnitsTurn()[2]['army1']->getUnitsList());
             //die;
-
 
             return $this->render('play.html.twig', ['battleForm' => $battleForm->createView(), 'combat' => $combatManager]);
         }

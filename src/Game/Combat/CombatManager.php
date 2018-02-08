@@ -33,7 +33,7 @@ class CombatManager
 		for ($i=1; $i < $this->maxTurn; $i++) 
 		{
 			// initiative 
-			if ($this->army1->getSpeed() > $this->army2->getSpeed()) 
+			if (($this->army1->getSpeed() / count($this->army1->getLivingUnits())) > ($this->army2->getSpeed() / count($this->army2->getLivingUnits()))) 
 			{
 				$attacker = $this->army1;
 				$defenser = $this->army2;

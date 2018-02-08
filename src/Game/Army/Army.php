@@ -24,6 +24,18 @@ class Army extends \ArrayIterator
 		$this->allowedClass = ['warrior', 'archer', 'mage'];
 	}
 
+	public function __clone() 
+	{
+		$array = [];
+
+		foreach ($this->unitsList as $unit) 
+		{
+			$array[] = clone $unit;	
+		}
+
+		$this->setUnitsList($array);
+	}
+
 	public function addUnit(Character $unit)
 	{
 		$this->unitsList[] = $unit;
@@ -48,7 +60,7 @@ class Army extends \ArrayIterator
 
 	public function setUnitsList(array $units)
 	{
-		$this->addUnitsList($units);
+		$this->unitsList = $units;
 	}
 
 	public function setClassList()
