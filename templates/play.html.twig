@@ -54,7 +54,7 @@
             {% block results %}
                 <div style="width: 48%; float: left;">
                     <h2>Results</h2>
-                    <h4>Winner : {{ combat.getWinner }}, en {{ combat.currentTurn }} tours !</h4>
+                    <h4>Winner : {{ combat.getWinner }}, en {{ combat.currentTurn -1 }} tours !</h4>
                     
                     <div>
                         <h5>Battle infos</h5>
@@ -91,19 +91,35 @@
                                     <td>{{ combat.army2.getMages()|length }}</td>
                                     <td>{{ combat.army2.getUnitsList()|length }}</td>
                                 </tr>
+                                
+                                {% for turn, stats in combat.unitsTurn %}
+                                    <tr>
+                                        <td>{{ turn }}</td>
+                                        <td style="width: 25px; background-color: grey;"> </td>
+                                        <td>{{ stats.army1.getLivingUnits('warrior')|length }}</td>
+                                        <td>{{ stats.army1.getLivingUnits('archer')|length }}</td>
+                                        <td>{{ stats.army1.getLivingUnits('mage')|length }}</td>
+                                        <td>{{ stats.army1.getLivingUnits()|length }}</td>
+                                        <td style="width: 25px; background-color: grey;"> </td>
+                                        <td>{{ stats.army2.getLivingUnits('warrior')|length }}</td>
+                                        <td>{{ stats.army2.getLivingUnits('archer')|length }}</td>
+                                        <td>{{ stats.army2.getLivingUnits('mage')|length }}</td>
+                                        <td>{{ stats.army2.getLivingUnits()|length }}</td>                                       
+                                    </tr>
+                                {% endfor %}
 
                                 <tr>
-                                    <td>Fin</td>
+                                    <td>Unité perdues</td>
                                     <td style="width: 25px; background-color: grey;"> </td>
-                                    <td>{{ combat.army1.getLivingUnits('warrior')|length }}</td>
-                                    <td>{{ combat.army1.getLivingUnits('archer')|length }}</td>
-                                    <td>{{ combat.army1.getLivingUnits('mage')|length }}</td>
-                                    <td>{{ combat.army1.getLivingUnits()|length }}</td>
+                                    <td>{{ combat.army1.getWarriors()|length - combat.army1.getLivingUnits('warrior')|length }}</td>
+                                    <td>{{ combat.army1.getArchers()|length - combat.army1.getLivingUnits('archer')|length }}</td>
+                                    <td>{{ combat.army1.getMages()|length - combat.army1.getLivingUnits('mage')|length }}</td>
+                                    <td>{{ combat.army1.getUnitsList()|length - combat.army1.getLivingUnits()|length }}</td>
                                     <td style="width: 25px; background-color: grey;"> </td>
-                                    <td>{{ combat.army2.getLivingUnits('warrior')|length }}</td>
-                                    <td>{{ combat.army2.getLivingUnits('archer')|length }}</td>
-                                    <td>{{ combat.army2.getLivingUnits('mage')|length }}</td>
-                                    <td>{{ combat.army2.getLivingUnits()|length }}</td>                                       
+                                    <td>{{ combat.army2.getWarriors()|length - combat.army2.getLivingUnits('warrior')|length }}</td>
+                                    <td>{{ combat.army2.getArchers()|length - combat.army2.getLivingUnits('archer')|length }}</td>
+                                    <td>{{ combat.army2.getMages()|length - combat.army2.getLivingUnits('mage')|length }}</td>
+                                    <td>{{ combat.army2.getUnitsList()|length - combat.army2.getLivingUnits()|length }}</td>                                       
                                 </tr>
                                 
                             </tbody>

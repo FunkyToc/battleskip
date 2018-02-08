@@ -11,7 +11,7 @@ class Archer extends Character implements SpecialInterface
 
 	// CONST 
 	const CLASSE = 'Archer';
-	const HP_MAX = 50;
+	const HP_MAX = 45;
 	const MP_MAX = 20;
 	const SPE_DMG = 20;
 	const SPE_COST = 10;
@@ -29,8 +29,8 @@ class Archer extends Character implements SpecialInterface
 		parent::__construct();
 		$this->setAttack(10);
 		$this->setDefense(7);
-		$this->setDodge(20);
-		$this->setSpeed(80);
+		$this->setDodge(10);
+		$this->setSpeed(8);
 	}
 
 	public function special()
@@ -46,7 +46,7 @@ class Archer extends Character implements SpecialInterface
 	public function focus()
 	{
 		$this->removeMp(static::SPE_COST);
-		$this->setBonus_dodge(20);
+		$this->setBonus_dodge(15);
 
 	}
 
@@ -54,7 +54,7 @@ class Archer extends Character implements SpecialInterface
 	{
 		$rand = rand(1, 100);
 
-		if ($rand <= 10) 
+		if ($rand <= 5) 
 		{
 			$this->setBonus_attack($this->attack / 2);
 		}

@@ -11,7 +11,7 @@ class Mage extends Character implements SpecialInterface
 
 	// CONST 
 	const CLASSE = 'Mage';
-	const HP_MAX = 50;
+	const HP_MAX = 40;
 	const MP_MAX = 30;
 	const SPE_DMG = 20;
 	const SPE_COST = 12;
@@ -30,7 +30,7 @@ class Mage extends Character implements SpecialInterface
 		$this->setAttack(9);
 		$this->setDefense(5);
 		$this->setDodge(5);
-		$this->setSpeed(50);
+		$this->setSpeed(5);
 	}
 
 	public function special()

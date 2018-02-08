@@ -29,8 +29,8 @@ class Warrior extends Character implements SpecialInterface
 		parent::__construct();
 		$this->setAttack(8);
 		$this->setDefense(10);
-		$this->setDodge(5);
-		$this->setSpeed(70);
+		$this->setDodge(10);
+		$this->setSpeed(7);
 	}
 
 	public function special()
@@ -46,12 +46,12 @@ class Warrior extends Character implements SpecialInterface
 	public function shield()
 	{
 		$this->removeMp(static::SPE_COST);
-		$this->setBonus_defense($this->defense);
+		$this->setBonus_defense($this->defense * 2);
 	}
 
 	public function regenHp()
 	{
-		$this->addHp(1);
+		$this->addHp(3);
 	}
 
 

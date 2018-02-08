@@ -12,6 +12,7 @@ class CombatManager
 	protected $army2;
 	protected $currentTurn;
 	protected $maxTurn;
+	protected $unitsTurn;
 	protected $winner;
 
 
@@ -20,7 +21,8 @@ class CombatManager
 		$this->army1 = $army1;
 		$this->army2 = $army2;
 		$this->currentTurn = 1;
-		$this->maxTurn = 100;
+		$this->maxTurn = 10;
+		$this->unitsTurn = [];
 	}
 
 
@@ -31,7 +33,7 @@ class CombatManager
 		for ($i=1; $i < $this->maxTurn; $i++) 
 		{
 			// initiative 
-			if ($this->army1->getAttack() > $this->army2->getAttack()) 
+			if ($this->army1->getSpeed() > $this->army2->getSpeed()) 
 			{
 				$attacker = $this->army1;
 				$defenser = $this->army2;
@@ -43,11 +45,12 @@ class CombatManager
 			}
 
 			// Attack 
-			$this->attack($attacker, $defenser);
+			$this->round($attacker, $defenser);
 
-			// Contre attack 
-			$this->attack($defenser, $attacker);
-			
+			// Get score by turn 
+			$this->unitsTurn[$this->currentTurn]['army1'] = clone $this->army1;
+			$this->unitsTurn[$this->currentTurn]['army2'] = clone $this->army2;
+
 			// Reset Bonus 
 			$attacker->resetBonus();
 			$defenser->resetBonus();
@@ -71,13 +74,30 @@ class CombatManager
 		$this->winner = $this->defineWinner();
 	}
 
-	public function attack(Army $attacker, Army $defenser)
+	public function round(Army $attacker, Army $defenser)
 	{
-		foreach ($attacker->getLivingUnits() as $unit) 
+		$attackerClasses = $attacker->getClassList();
+		$defenserClasses = $defenser->getClassList();
+
+		// Archer 
+		$this->attack($attacker->getLivingUnits('archer'), $defenser->getLivingUnits());
+		$this->attack($defenser->getLivingUnits('archer'), $attacker->getLivingUnits());
+		
+		// Warrior 
+		$this->attack($attacker->getLivingUnits('warrior'), $defenser->getLivingUnits());
+		$this->attack($defenser->getLivingUnits('warrior'), $attacker->getLivingUnits());
+		
+		// Mage 
+		$this->attack($attacker->getLivingUnits('mage'), $defenser->getLivingUnits());
+		$this->attack($defenser->getLivingUnits('mage'), $attacker->getLivingUnits());
+	}
+
+	public function attack(array $attackers, array $defenserUnits)
+	{
+		// Attack 
+		foreach ($attackers as $unit) 
 		{
 			// Choose Defender 
-			$defenserUnits = $defenser->getLivingUnits();
-
 			if (count($defenserUnits) == 0) 
 			{
 				break;
@@ -165,6 +185,11 @@ class CombatManager
 	public function getWinner()
 	{
 		return $this->winner;
+	}
+
+	public function getUnitsTurn()
+	{
+		return $this->unitsTurn;
 	}
 
 

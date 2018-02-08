@@ -189,6 +189,80 @@ class Army extends \ArrayIterator
 		return $globalAttack;
 	}
 
+	public function getDefense(string $class = '')
+	{
+		$globalDefense = 0;
+
+		// Class attack 
+		if (!empty($class)) 
+		{
+			if (array_search($class, $this->allowedClass) !== false) 
+			{
+				$theclass = 'App\Game\Characters\Classes\\'. ucfirst($class);
+				
+				foreach ($this->unitsList as $unit) 
+				{
+					if ($unit instanceof $theclass) 
+					{
+						$globalDefense += $unit->getDefense();
+					}
+				}
+			}
+			else 
+			{
+				return 'Error';
+			}
+
+		}
+		else 
+		{
+			// Army attack 
+			foreach ($this->unitsList as $unit) 
+			{
+				$globalDefense += $unit->getDefense();
+			}
+		}
+
+		return $globalDefense;
+	}
+
+	public function getSpeed(string $class = '')
+	{
+		$globalSpeed = 0;
+
+		// Class attack 
+		if (!empty($class)) 
+		{
+			if (array_search($class, $this->allowedClass) !== false) 
+			{
+				$theclass = 'App\Game\Characters\Classes\\'. ucfirst($class);
+				
+				foreach ($this->unitsList as $unit) 
+				{
+					if ($unit instanceof $theclass) 
+					{
+						$globalSpeed += $unit->getSpeed();
+					}
+				}
+			}
+			else 
+			{
+				return 'Error';
+			}
+
+		}
+		else 
+		{
+			// Army attack 
+			foreach ($this->unitsList as $unit) 
+			{
+				$globalSpeed += $unit->getSpeed();
+			}
+		}
+
+		return $globalSpeed;
+	}
+
 	public function resetBonus()
 	{
 		foreach ($this->unitsList as $unit) 
@@ -196,6 +270,7 @@ class Army extends \ArrayIterator
 			$unit->setBonus_attack(0);
 			$unit->setBonus_defense(0);
 			$unit->setBonus_counter(0);
+			$unit->setBonus_dodge(0);
 			$unit->setStatut(0);
 		}
 	}
